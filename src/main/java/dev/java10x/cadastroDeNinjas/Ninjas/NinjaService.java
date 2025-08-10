@@ -9,11 +9,13 @@ import java.util.Optional;
 @Service
 public class NinjaService {
 
+    private NinjaMapper ninjaMapper;
     private NinjaRepository ninjaRepository;
 
     //dependency injection
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
     //listar todos os ninjas
@@ -28,8 +30,11 @@ public class NinjaService {
     }
 
     //criar novos ninjas
-    public NinjaModel criarNinja(NinjaModel ninja){
-        return ninjaRepository.save(ninja);
+    public NinjaDTO criarNinja(NinjaDTO ninjaDTO){
+        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
+        ninjaRepository.save(ninja);
+        return ninjaMapper.map(ninja);
+
     }
 
     //deletar o ninja (DELETE TEM QUE SER UM VOID)

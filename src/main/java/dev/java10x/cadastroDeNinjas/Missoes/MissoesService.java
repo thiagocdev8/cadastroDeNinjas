@@ -1,5 +1,6 @@
 package dev.java10x.cadastroDeNinjas.Missoes;
 
+import dev.java10x.cadastroDeNinjas.Ninjas.NinjaModel;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -7,9 +8,11 @@ import java.util.Optional;
 @Service
 public class MissoesService {
 
+    private MissoesMapper missoesMapper;
     private final MissoesRepository missoesRepository;
 
-    public MissoesService(MissoesRepository missoesRepository) {
+    public MissoesService(MissoesRepository missoesRepository, MissoesMapper missoesMapper) {
+        this.missoesMapper = missoesMapper;
         this.missoesRepository = missoesRepository;
     }
 
@@ -25,8 +28,10 @@ public class MissoesService {
     }
 
     //criar missoes
-    public MissoesModel criarMissoes(MissoesModel missao){
-        return missoesRepository.save(missao);
+    public MissoesDTO criarMissoes(MissoesDTO missaoDTO){
+        MissoesModel missao = missoesMapper.map(missaoDTO);
+        missoesRepository.save(missao);
+        return missoesMapper.map(missao);
     }
 
     //deletar missoes
