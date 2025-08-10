@@ -18,12 +18,13 @@ public class MissoesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
     private String nome;
+
     private String dificuldade;
 
     //OneToMany - One mission to Many ninjas
-    @OneToMany
-    @JoinColumn(name = "missoes_id") // Foreign key
+    @OneToMany(mappedBy = "missoes") // Foreign key
     private List<NinjaModel> ninjas;
 
 
